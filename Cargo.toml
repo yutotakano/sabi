@@ -1,10 +1,15 @@
 [package]
+edition = "2024"
 name = "sabi"
 version = "0.1.0"
-edition = "2024"
 
 [dependencies]
 anyhow = "1.0.102"
-gpui = "0.2.2"
-gpui-component = "0.5.1"
+cxx = "1.0.194"
+cxx-qt = "0.8.1"
+cxx-qt-lib = {version = "0.8.1", features = ["qt_full"]}
 rbook = "0.7.6"
+
+[build-dependencies]
+# The link_qt_object_files feature is required for statically linking Qt 6.
+cxx-qt-build = {version = "0.8.1", features = ["link_qt_object_files"]}

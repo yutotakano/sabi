@@ -1,51 +1,31 @@
-use gpui::*;
-use gpui_component::{button::*, *};
-use rbook::Epub;
+pub mod cxxqt_object;
 
-pub struct HelloWorld;
-impl Render for HelloWorld {
-    fn render(&mut self, _: &mut Window, _: &mut Context<Self>) -> impl IntoElement {
-        div()
-            .v_flex()
-            .gap_2()
-            .size_full()
-            .items_center()
-            .justify_center()
-            .child("Hello, World!")
-            .child(
-                Button::new("ok")
-                    .primary()
-                    .label("Let's Go!")
-                    .on_click(|_, _, _| println!("Clicked!")),
-            )
-    }
-}
+use cxx_qt::casting::Upcast;
+use cxx_qt_lib::{QGuiApplication, QQmlApplicationEngine, QQmlEngine, QUrl};
+use std::pin::Pin;
 
 fn main() {
-    let app = Application::new();
+    // Create the application and engine
+    let mut app = QGuiApplication::new();
+    let mut engine = QQmlApplicationEngine::new();
 
-    let epub = Epub::open("test/romeo_and_juliet_pg1513.epub").unwrap();
-
-    for data_result in epub.reader() {
-        let data = data_result.unwrap();
-        let kind = data.manifest_entry().kind();
-        println!("Got data of kind: {kind:?}");
-        println!("{}", data.content());
+    // Load the QML path into the engine
+    if let Some(engine) = engine.as_mut() {
+        engine.load(&QUrl::from("qrc:/qt/qml/com/kdab/cxx_qt/demo/qml/main.qml"));
     }
 
-    app.run(move |cx| {
-        // This must be called before using any GPUI Component features.
-        gpui_component::init(cx);
+    if let Some(engine) = engine.as_mut() {
+        let engine: Pin<&mut QQmlEngine> = engine.upcast_pin();
+        // Listen to a signal from the QML Engine
+        engine
+            .on_quit(|_| {
+                println!("QML Quit!");
+            })
+            .release();
+    }
 
-        cx.spawn(async move |cx| {
-            cx.open_window(WindowOptions::default(), |window, cx| {
-                let view = cx.new(|_| HelloWorld);
-                // This first level on the window, should be a Root.
-                cx.new(|cx| Root::new(view, window, cx))
-            })?;
-
-            Ok::<_, anyhow::Error>(())
-        })
-        .detach();
-    });
+    // Start the app
+    if let Some(app) = app.as_mut() {
+        app.exec();
+    }
 }
