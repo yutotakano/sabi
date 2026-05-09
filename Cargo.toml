@@ -22,4 +22,5 @@ default_job = "run"
 background = false
 command = ["cargo", "run"]
 need_stdout = true
-on_change_strategy = "wait_then_restart"
+on_change_strategy = "kill_then_restart"
+watch = ["qml"]

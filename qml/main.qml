@@ -11,8 +11,27 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
     visible: true
+    // Use these flags to make window not steal focus on startup, we'll change
+    // it to a normal window afterwards. This way we can keep writing code :)
+    // Might change in the future
+    flags: Qt.Window | Qt.WindowTransparentForInput | Qt.WindowDoesNotAcceptFocus
     width: 640
     color: palette.window
+    Component.onCompleted: {
+        if (Qt.application.screens.length > 1) {
+            let targetScreen = Qt.application.screens[1];
+
+            root.screen = targetScreen;
+
+            root.x = targetScreen.virtualX + (targetScreen.width - root.width) / 2;
+            root.y = targetScreen.virtualY + (targetScreen.height - root.height) / 2;
+        } else {
+            console.warn("Only one monitor detected. Defaulting to primary.");
+        }
+
+        // Show manually
+        root.flags = Qt.Window;
+    }
 
     readonly property MyObject myObject: MyObject {
         number: 1
