@@ -1,5 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import Qt.labs.platform
+
 import QtQuick.Window 2.12
 
 // This must match the uri and version
@@ -36,6 +38,17 @@ ApplicationWindow {
     readonly property MyObject myObject: MyObject {
         number: 1
         string: qsTr("My String with my number: %1").arg(number)
+    }
+
+    MenuBar {
+        Menu {
+            title: 'File'
+            MenuItem {
+                text: 'New'
+                shortcut: StandardKey.New
+                onTriggered: console.log("New triggered")
+            }
+        }
     }
 
     Column {
