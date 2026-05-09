@@ -13,3 +13,13 @@ rbook = "0.7.6"
 [build-dependencies]
 # The link_qt_object_files feature is required for statically linking Qt 6.
 cxx-qt-build = {version = "0.8.1", features = ["link_qt_object_files"]}
+
+[package.metadata.bacon]
+
+default_job = "run"
+
+[package.metadata.bacon.jobs.run]
+background = false
+command = ["cargo", "run"]
+need_stdout = true
+on_change_strategy = "wait_then_restart"
