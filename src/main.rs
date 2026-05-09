@@ -1,5 +1,6 @@
 use gpui::*;
 use gpui_component::{button::*, *};
+use rbook::Epub;
 
 pub struct HelloWorld;
 impl Render for HelloWorld {
@@ -22,6 +23,15 @@ impl Render for HelloWorld {
 
 fn main() {
     let app = Application::new();
+
+    let epub = Epub::open("test/romeo_and_juliet_pg1513.epub").unwrap();
+
+    for data_result in epub.reader() {
+        let data = data_result.unwrap();
+        let kind = data.manifest_entry().kind();
+        println!("Got data of kind: {kind:?}");
+        println!("{}", data.content());
+    }
 
     app.run(move |cx| {
         // This must be called before using any GPUI Component features.
