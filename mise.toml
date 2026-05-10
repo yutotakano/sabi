@@ -1,4 +1,3 @@
 [tools]
 "cargo:bacon" = "latest"
 cmake = "latest"
-rust = {version = "1.95.0", components = "cargo,rust-analyzer,rustfmt,rustc,rust-std,clippy,rust-docs"}
