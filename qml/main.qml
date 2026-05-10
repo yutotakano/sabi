@@ -42,7 +42,7 @@ ApplicationWindow {
 
     MenuBar {
         Menu {
-            title: 'File'
+            title: '&File'
             MenuItem {
                 text: 'New'
                 shortcut: StandardKey.New
