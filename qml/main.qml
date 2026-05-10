@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Qt.labs.platform
+import QtWebView
+import QtQuick.Layouts
 
 import QtQuick.Window 2.12
 
@@ -33,6 +35,9 @@ ApplicationWindow {
 
         // Show manually
         root.flags = Qt.Window;
+
+        myObject.loadBook();
+        webView.loadHtml(myObject.getBookHtml());
     }
 
     readonly property MyObject myObject: MyObject {
@@ -51,7 +56,7 @@ ApplicationWindow {
         }
     }
 
-    Column {
+    ColumnLayout {
         anchors.fill: parent
         anchors.margins: 10
         spacing: 10
@@ -75,7 +80,15 @@ ApplicationWindow {
         Button {
             text: qsTr("Say Hi!")
 
-            onClicked: root.myObject.sayHi(root.myObject.string, root.myObject.number)
+            onClicked: {
+                root.myObject.sayHi(root.myObject.string, root.myObject.number);
+            }
+        }
+
+        WebView {
+            id: webView
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
 
         Button {
