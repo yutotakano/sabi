@@ -43,7 +43,6 @@ Epub::Epub(const std::filesystem::path &path)
     std::string packagePath = packageNodes[0].node().attribute("full-path").value();
 
     m_package = new EpubPackage(zip, packagePath);
-    m_manifest = new EpubManifest();
     m_spine = new EpubSpine();
     m_toc = new EpubToc();
 }
@@ -51,7 +50,6 @@ Epub::Epub(const std::filesystem::path &path)
 Epub::~Epub()
 {
     delete m_package;
-    delete m_manifest;
     delete m_spine;
     delete m_toc;
 }
@@ -68,7 +66,7 @@ EpubMetadata *Epub::metadata()
 
 EpubManifest *Epub::manifest()
 {
-    return m_manifest;
+    return m_package->manifest();
 }
 
 EpubSpine *Epub::spine()
@@ -79,14 +77,6 @@ EpubSpine *Epub::spine()
 EpubToc *Epub::toc()
 {
     return m_toc;
-}
-
-EpubManifest::EpubManifest()
-{
-}
-
-EpubManifest::~EpubManifest()
-{
 }
 
 EpubSpine::EpubSpine()

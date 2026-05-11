@@ -6,13 +6,6 @@
 
 #include "epubpackage.h"
 
-class EpubManifest
-{
-public:
-    EpubManifest();
-    ~EpubManifest();
-};
-
 class EpubSpine
 {
 public:
@@ -41,7 +34,6 @@ public:
 
 private:
     EpubPackage *m_package;
-    EpubManifest *m_manifest;
     EpubSpine *m_spine;
     EpubToc *m_toc;
 };
