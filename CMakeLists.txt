@@ -13,6 +13,7 @@ qt_standard_project_setup()
 qt_add_executable(helloworld
     src/mainwindow.ui
     src/main.cpp
+    src/epub.cpp
 )
 
 find_package(libzippp CONFIG REQUIRED)

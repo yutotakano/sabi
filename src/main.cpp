@@ -2,6 +2,8 @@
 #include <QApplication>
 #include <QWebEngineView>
 
+#include "epub.h"
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -26,6 +28,8 @@ int main(int argc, char *argv[])
         if (ok) {
             widget.show();
         } });
+
+    Epub epub(std::filesystem::path("test/romeo_and_juliet_pg1513.epub"));
 
     return app.exec();
 }
