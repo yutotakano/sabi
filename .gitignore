@@ -2,3 +2,5 @@
 /target
 /build
 .vscode
+CMakeUserPresets.json
+/vcpkg_installed

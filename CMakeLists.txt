@@ -15,7 +15,9 @@ qt_add_executable(helloworld
     src/main.cpp
 )
 
-target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets)
+find_package(libzip CONFIG REQUIRED)
+
+target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets libzip::zip)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set_target_properties(helloworld PROPERTIES
