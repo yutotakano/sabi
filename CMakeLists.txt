@@ -17,10 +17,13 @@ qt_add_executable(helloworld
 
 target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets)
 
-set_target_properties(helloworld PROPERTIES
-    # Set to TRUE for release builds, FALSE for debug builds
-    WIN32_EXECUTABLE ON
-)
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set_target_properties(helloworld PROPERTIES
+        # Set to TRUE for release builds, otherwise we want debug console output
+        WIN32_EXECUTABLE ON
+        MACOSX_BUNDLE ON
+    )
+endif()
 
 add_custom_target(run
     COMMAND helloworld
