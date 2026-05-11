@@ -18,9 +18,7 @@ EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
 
     std::string version = doc.child("package").attribute("version").value();
     std::string unique_id = doc.child("package").attribute("unique-identifier").value();
-
-    std::cout << "Package version: " << version << std::endl;
-    std::cout << "Package unique identifier: " << unique_id << std::endl;
+    m_metadata = new EpubMetadata(version, unique_id);
 }
 
 EpubPackage::~EpubPackage()
