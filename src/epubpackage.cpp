@@ -31,7 +31,7 @@ EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
     std::string dc_identifier = doc.select_node(("/package/metadata/dc:identifier[@id='" + unique_id + "']").c_str()).node().child_value();
     std::string dc_language = doc.child("package").child("metadata").child("dc:language").child_value();
 
-    // doesn't distinguish roles (optional) for now
+    // doesn't distinguish roles (optional) or file-as (optional) for now
     std::vector<std::string> dc_creators;
     for (pugi::xml_node creatorNode : metadataNode.children("dc:creator"))
     {
