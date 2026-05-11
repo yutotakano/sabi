@@ -10,12 +10,11 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets WebEngineWidgets)
 
 qt_standard_project_setup()
 
+file(GLOB_RECURSE SOURCES src/*.cpp)
+
 qt_add_executable(helloworld
     src/mainwindow.ui
-    src/main.cpp
-    src/epub.cpp
-    src/epubpackage.cpp
-    src/epubmetadata.cpp
+    ${SOURCES}
 )
 
 find_package(libzippp CONFIG REQUIRED)
