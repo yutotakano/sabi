@@ -28,3 +28,28 @@ Epub::Epub(const std::filesystem::path &path)
 Epub::~Epub()
 {
 }
+
+EpubPackage *Epub::package()
+{
+    return m_package;
+}
+
+EpubMetadata *Epub::metadata()
+{
+    return m_metadata;
+}
+
+EpubManifest *Epub::manifest()
+{
+    return m_manifest;
+}
+
+EpubSpine *Epub::spine()
+{
+    return m_spine;
+}
+
+EpubToc *Epub::toc()
+{
+    return m_toc;
+}
