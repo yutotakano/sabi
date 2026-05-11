@@ -26,23 +26,16 @@ EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
         metadataNode = doc.child("package").child("metadata");
     }
 
-    // Required elements (Epub 3 = 5.5.1, Epub 2 = 2.2)
-    std::string dc_title = doc.child("package").child("metadata").child("dc:title").child_value();
-    std::string dc_identifier = doc.select_node(("/package/metadata/dc:identifier[@id='" + unique_id + "']").c_str()).node().child_value();
-    std::string dc_language = doc.child("package").child("metadata").child("dc:language").child_value();
+    m_metadata = new EpubMetadata(metadataNode);
 
-    // doesn't distinguish roles (optional) or file-as (optional) for now
-    std::vector<std::string> dc_creators;
-    for (pugi::xml_node creatorNode : metadataNode.children("dc:creator"))
-    {
-        dc_creators.push_back(creatorNode.child_value());
-    }
-    m_metadata = new EpubMetadata(version, unique_id, dc_title, dc_identifier, dc_language, dc_creators);
+    pugi::xml_node manifestNode = doc.child("package").child("manifest");
+    m_manifest = new EpubManifest(manifestNode);
 }
 
 EpubPackage::~EpubPackage()
 {
     delete m_metadata;
+    delete m_manifest;
 }
 
 EpubMetadata *EpubPackage::metadata()

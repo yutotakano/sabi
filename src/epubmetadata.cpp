@@ -2,16 +2,27 @@
 
 #include "epubmetadata.h"
 
-EpubMetadata::EpubMetadata(const std::string &version, const std::string &unique_id, const std::string &dc_title, const std::string &dc_identifier, const std::string &dc_language, const std::vector<std::string> &dc_creators)
-    : version(version), unique_id(unique_id), dc_title(dc_title), dc_identifier(dc_identifier), dc_language(dc_language), dc_creators(dc_creators)
+EpubMetadata::EpubMetadata(pugi::xml_node metadataNode)
 {
-    std::cout << "Package version: " << version << std::endl;
-    std::cout << "Package unique identifier: " << unique_id << std::endl;
-    std::cout << "DC title: " << dc_title << std::endl;
-    std::cout << "DC identifier: " << dc_identifier << std::endl;
-    std::cout << "DC language: " << dc_language << std::endl;
+    // Required elements (Epub 3 = 5.5.1, Epub 2 = 2.2)
+    m_dc_title = metadataNode.child("dc:title").child_value();
+    m_dc_identifier = metadataNode.child("dc:identifier").child_value();
+    m_dc_language = metadataNode.child("dc:language").child_value();
+
+    // doesn't distinguish roles (optional) or file-as (optional) for now
+    m_dc_creators.clear();
+    for (pugi::xml_node creatorNode : metadataNode.children("dc:creator"))
+    {
+        m_dc_creators.push_back(creatorNode.child_value());
+    }
+
+    std::cout << "Package version: " << m_version << std::endl;
+    std::cout << "Package unique identifier: " << m_unique_id << std::endl;
+    std::cout << "DC title: " << m_dc_title << std::endl;
+    std::cout << "DC identifier: " << m_dc_identifier << std::endl;
+    std::cout << "DC language: " << m_dc_language << std::endl;
     std::cout << "DC creators: " << std::endl;
-    for (const std::string &creator : dc_creators)
+    for (const std::string &creator : m_dc_creators)
     {
         std::cout << "  " << creator << std::endl;
     }

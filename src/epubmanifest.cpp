@@ -1,6 +1,6 @@
 #include "epubmanifest.h"
 
-EpubManifest::EpubManifest()
+EpubManifest::EpubManifest(pugi::xml_node manifestNode)
 {
 }
 
