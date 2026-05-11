@@ -15,9 +15,9 @@ qt_add_executable(helloworld
     src/main.cpp
 )
 
-find_package(libzip CONFIG REQUIRED)
+find_package(libzippp CONFIG REQUIRED)
 
-target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets libzip::zip)
+target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets libzippp::libzippp)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set_target_properties(helloworld PROPERTIES
