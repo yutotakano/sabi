@@ -7,6 +7,8 @@ EpubSpine::EpubSpine(pugi::xml_node spineNode)
     {
         m_entries.push_back(new EpubSpineEntry(itemrefNode.node()));
     }
+
+    m_tocId = spineNode.attribute("toc").value();
 }
 
 EpubSpine::~EpubSpine()

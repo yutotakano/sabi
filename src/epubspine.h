@@ -28,8 +28,11 @@ public:
     EpubSpine(pugi::xml_node spineNode);
     ~EpubSpine();
 
+    std::string tocId() const { return m_tocId; }
+
 private:
     std::vector<EpubSpineEntry *> m_entries;
+    std::string m_tocId;
 };
 
 #endif // EPUBSPINE_H
