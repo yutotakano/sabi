@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     view.setHtml("<html><body><h1>Hello, World! </h1><p>This is a simple web view.</p></body></html>");
     view.page()->setBackgroundColor(Qt::transparent);
 
-    ui.verticalLayout->addWidget(&view);
+    ui.webview->addWidget(&view);
 
     // Quit on button press
     ui.pushButton->connect(ui.pushButton, &QPushButton::clicked, &app, &QApplication::quit);
