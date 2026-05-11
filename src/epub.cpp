@@ -17,6 +17,18 @@ Epub::Epub(const std::filesystem::path &path)
         std::cout << "Entry: " << entry.getName() << std::endl;
     }
 
+    // Get META-INF/container.xml
+    auto containerEntry = zip.getEntry("META-INF/container.xml");
+    if (containerEntry.isNull())
+    {
+        throw std::runtime_error("Failed to find META-INF/container.xml in EPUB file: " + path.string());
+    }
+
+    // Read the content of container.xml
+    containerEntry.readContent(std::cout);
+
+    zip.getEntry("mimetype").readContent(std::cout);
+
     m_package = new EpubPackage();
     m_metadata = new EpubMetadata();
     m_manifest = new EpubManifest();
