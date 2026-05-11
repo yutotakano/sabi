@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>692</width>
-    <height>229</height>
+    <width>582</width>
+    <height>506</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,13 +17,26 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>20</y>
-      <width>160</width>
-      <height>80</height>
+      <x>0</x>
+      <y>0</y>
+      <width>581</width>
+      <height>431</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout"/>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>430</y>
+      <width>81</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Quit</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -32,7 +45,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>692</width>
+     <width>582</width>
      <height>33</height>
     </rect>
    </property>

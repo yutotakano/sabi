@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets WebView)
+find_package(Qt6 REQUIRED COMPONENTS Widgets WebEngineWidgets)
 
 qt_standard_project_setup()
 
@@ -15,7 +15,7 @@ qt_add_executable(helloworld
     src/main.cpp
 )
 
-target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebView)
+target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets)
 
 set_target_properties(helloworld PROPERTIES
     # Set to TRUE for release builds, FALSE for debug builds

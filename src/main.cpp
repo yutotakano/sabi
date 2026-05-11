@@ -1,10 +1,9 @@
 #include "ui_mainwindow.h"
 #include <QApplication>
-#include <QtWebView>
+#include <QWebEngineView>
 
 int main(int argc, char *argv[])
 {
-    QtWebView::initialize();
     QApplication app(argc, argv);
 
     app.setStyle("windowsvista");
@@ -12,12 +11,20 @@ int main(int argc, char *argv[])
     Ui::MainWindow ui;
     ui.setupUi(&widget);
 
-    QWebView view;
-    view.loadHtml("<html><body><h1>Hello, World!</h1><p>This is a simple web view.</p></body></html>");
+    QWebEngineView view;
+    view.setHtml("<html><body><h1>Hello, World! </h1><p>This is a simple web view.</p></body></html>");
 
-    QWidget *webViewContainer = QWidget::createWindowContainer(&view); 
-    ui.verticalLayout->addWidget(webViewContainer);
+    ui.verticalLayout->addWidget(&view);
 
-    widget.show();
+    // Quit on button press
+    ui.pushButton->connect(ui.pushButton, &QPushButton::clicked, &app, &QApplication::quit);
+
+    // Only show main window when the web view is loaded
+    QObject::connect(&view, &QWebEngineView::loadFinished, [&widget](bool ok)
+                     {
+        if (ok) {
+            widget.show();
+        } });
+
     return app.exec();
 }
