@@ -30,10 +30,14 @@ EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
 
     pugi::xml_node manifestNode = doc.child("package").child("manifest");
     m_manifest = new EpubManifest(manifestNode);
+
+    pugi::xml_node spineNode = doc.child("package").child("spine");
+    m_spine = new EpubSpine(spineNode);
 }
 
 EpubPackage::~EpubPackage()
 {
     delete m_metadata;
     delete m_manifest;
+    delete m_spine;
 }
