@@ -32,7 +32,7 @@ EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
     m_manifest = new EpubManifest(manifestNode);
 
     pugi::xml_node spineNode = doc.child("package").child("spine");
-    m_spine = new EpubSpine(spineNode);
+    m_spine = new EpubSpine(spineNode, m_manifest);
 }
 
 EpubPackage::~EpubPackage()
