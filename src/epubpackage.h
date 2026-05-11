@@ -12,8 +12,8 @@ public:
     EpubPackage(libzippp::ZipArchive &zip, const std::string &path);
     ~EpubPackage();
 
-    EpubMetadata *metadata();
-    EpubManifest *manifest();
+    EpubMetadata *metadata() { return m_metadata; }
+    EpubManifest *manifest() { return m_manifest; }
 
 private:
     EpubMetadata *m_metadata;

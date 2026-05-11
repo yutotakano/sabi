@@ -54,21 +54,6 @@ Epub::~Epub()
     delete m_toc;
 }
 
-EpubPackage *Epub::package()
-{
-    return m_package;
-}
-
-EpubMetadata *Epub::metadata()
-{
-    return m_package->metadata();
-}
-
-EpubManifest *Epub::manifest()
-{
-    return m_package->manifest();
-}
-
 EpubSpine *Epub::spine()
 {
     return m_spine;

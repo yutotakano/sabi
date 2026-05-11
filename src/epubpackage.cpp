@@ -37,13 +37,3 @@ EpubPackage::~EpubPackage()
     delete m_metadata;
     delete m_manifest;
 }
-
-EpubMetadata *EpubPackage::metadata()
-{
-    return m_metadata;
-}
-
-EpubManifest *EpubPackage::manifest()
-{
-    return m_manifest;
-}

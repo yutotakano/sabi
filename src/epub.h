@@ -26,9 +26,9 @@ public:
     Epub(const std::filesystem::path &path);
     ~Epub();
 
-    EpubPackage *package();
-    EpubMetadata *metadata();
-    EpubManifest *manifest();
+    EpubPackage *package() { return m_package; }
+    EpubMetadata *metadata() { return m_package->metadata(); }
+    EpubManifest *manifest() { return m_package->manifest(); }
     EpubSpine *spine();
     EpubToc *toc();
 
