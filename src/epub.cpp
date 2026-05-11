@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "libzippp.h"
+#include "pugixml.hpp"
 
 #include "epub.h"
 
@@ -25,7 +26,23 @@ Epub::Epub(const std::filesystem::path &path)
         throw std::runtime_error("No valid mimetype entry in EPUB file");
     }
 
-    m_package = new EpubPackage();
+    // Use only first package for now
+    pugi::xml_document doc;
+    pugi::xml_parse_result result = doc.load_string(zip.getEntry("META-INF/container.xml").readAsText().c_str());
+    if (!result)
+    {
+        throw std::runtime_error("Failed to parse container.xml: " + std::string(result.description()));
+    }
+
+    pugi::xpath_node_set packageNodes = doc.select_nodes("/container/rootfiles/rootfile");
+    if (packageNodes.empty())
+    {
+        throw std::runtime_error("No rootfile entry in container.xml");
+    }
+
+    std::string packagePath = packageNodes[0].node().attribute("full-path").value();
+
+    m_package = new EpubPackage(zip, packagePath);
     m_metadata = new EpubMetadata();
     m_manifest = new EpubManifest();
     m_spine = new EpubSpine();
@@ -61,8 +78,9 @@ EpubToc *Epub::toc()
     return m_toc;
 }
 
-EpubPackage::EpubPackage()
+EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
 {
+    std::cout << "Loading package file: " << path << std::endl;
 }
 
 EpubPackage::~EpubPackage()

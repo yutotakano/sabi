@@ -1,13 +1,15 @@
 #ifndef EPUB_H
 #define EPUB_H
 
-#include <string>
 #include <filesystem>
+#include <string>
+
+#include <libzippp.h>
 
 class EpubPackage
 {
 public:
-    EpubPackage();
+    EpubPackage(libzippp::ZipArchive &zip, const std::string &path);
     ~EpubPackage();
 };
 

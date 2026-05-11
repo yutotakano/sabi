@@ -17,8 +17,9 @@ qt_add_executable(helloworld
 )
 
 find_package(libzippp CONFIG REQUIRED)
+find_package(pugixml CONFIG REQUIRED)
 
-target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets libzippp::libzippp)
+target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets libzippp::libzippp pugixml::pugixml)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set_target_properties(helloworld PROPERTIES
