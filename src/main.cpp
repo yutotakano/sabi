@@ -2,10 +2,33 @@
 #include <QApplication>
 #include <QWebEngineView>
 
+#include <iostream>
+
 #include "epub.h"
 
 int main(int argc, char *argv[])
 {
+    std::set_terminate([]()
+    {
+        try
+        {
+            throw;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Unhandled exception: " << e.what() << std::endl;
+        }
+        catch (...)
+        {
+            std::cerr << "Unhandled unknown exception" << std::endl;
+        };
+        if (qApp)
+        {
+            qApp->exit(1);
+        }
+        exit(1);
+    });
+
     QApplication app(argc, argv);
 
     app.setStyle("windowsvista");
@@ -24,10 +47,12 @@ int main(int argc, char *argv[])
 
     // Only show main window when the web view is loaded
     QObject::connect(&view, &QWebEngineView::loadFinished, [&widget](bool ok)
-                     {
-        if (ok) {
+    {
+        if (ok)
+        {
             widget.show();
-        } });
+        }
+    });
 
     Epub epub(std::filesystem::path("test/romeo_and_juliet_pg1513.epub"));
 
