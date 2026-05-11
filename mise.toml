@@ -1,3 +1,2 @@
 [tools]
-"cargo:bacon" = "latest"
 cmake = "latest"
