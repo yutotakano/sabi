@@ -25,3 +25,8 @@ EpubPackage::~EpubPackage()
 {
     delete m_metadata;
 }
+
+EpubMetadata *EpubPackage::metadata()
+{
+    return m_metadata;
+}
