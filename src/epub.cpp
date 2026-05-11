@@ -5,6 +5,7 @@
 Epub::Epub(const std::filesystem::path &path)
 {
     libzippp::ZipArchive zip(path.string());
+    zip.open(libzippp::ZipArchive::ReadOnly);
     if (!zip.isOpen())
     {
         throw std::runtime_error("Failed to open EPUB file: " + path.string());
