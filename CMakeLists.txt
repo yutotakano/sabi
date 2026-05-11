@@ -14,6 +14,7 @@ qt_add_executable(helloworld
     src/mainwindow.ui
     src/main.cpp
     src/epub.cpp
+    src/epubpackage.cpp
 )
 
 find_package(libzippp CONFIG REQUIRED)

@@ -78,15 +78,6 @@ EpubToc *Epub::toc()
     return m_toc;
 }
 
-EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
-{
-    std::cout << "Loading package file: " << path << std::endl;
-}
-
-EpubPackage::~EpubPackage()
-{
-}
-
 EpubMetadata::EpubMetadata()
 {
 }

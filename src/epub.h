@@ -4,14 +4,7 @@
 #include <filesystem>
 #include <string>
 
-#include <libzippp.h>
-
-class EpubPackage
-{
-public:
-    EpubPackage(libzippp::ZipArchive &zip, const std::string &path);
-    ~EpubPackage();
-};
+#include "epubpackage.h"
 
 class EpubMetadata
 {
