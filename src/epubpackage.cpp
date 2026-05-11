@@ -25,4 +25,5 @@ EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
 
 EpubPackage::~EpubPackage()
 {
+    delete m_metadata;
 }
