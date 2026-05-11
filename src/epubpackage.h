@@ -5,6 +5,7 @@
 
 #include "epubmanifest.h"
 #include "epubmetadata.h"
+#include "epubspine.h"
 
 class EpubPackage
 {
@@ -14,10 +15,12 @@ public:
 
     EpubMetadata *metadata() { return m_metadata; }
     EpubManifest *manifest() { return m_manifest; }
+    EpubSpine *spine() { return m_spine; }
 
 private:
     EpubMetadata *m_metadata;
     EpubManifest *m_manifest;
+    EpubSpine *m_spine;
 };
 
 #endif // EPUBPACKAGE_H
