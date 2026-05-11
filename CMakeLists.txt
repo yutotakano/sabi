@@ -10,7 +10,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets WebEngineWidgets)
 
 qt_standard_project_setup()
 
-file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 
 qt_add_executable(helloworld
     src/mainwindow.ui
