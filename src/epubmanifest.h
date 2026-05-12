@@ -30,6 +30,7 @@ public:
     ~EpubManifest();
 
     EpubManifestEntry *entryById(const std::string &id);
+    EpubManifestEntry *entryByHref(const std::string &href);
 
 private:
     std::vector<EpubManifestEntry *> m_entries;

@@ -37,6 +37,18 @@ EpubManifestEntry *EpubManifest::entryById(const std::string &id)
     return nullptr;
 }
 
+EpubManifestEntry *EpubManifest::entryByHref(const std::string &href)
+{
+    for (EpubManifestEntry *entry : m_entries)
+    {
+        if (entry->href() == href)
+        {
+            return entry;
+        }
+    }
+    return nullptr;
+}
+
 EpubManifestEntry::EpubManifestEntry(pugi::xml_node itemNode)
 {
     m_id = itemNode.attribute("id").value();
