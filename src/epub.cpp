@@ -43,24 +43,9 @@ Epub::Epub(const std::filesystem::path &path)
     std::string packagePath = packageNodes[0].node().attribute("full-path").value();
 
     m_package = new EpubPackage(zip, packagePath);
-    m_toc = new EpubToc();
 }
 
 Epub::~Epub()
 {
     delete m_package;
-    delete m_toc;
-}
-
-EpubToc *Epub::toc()
-{
-    return m_toc;
-}
-
-EpubToc::EpubToc()
-{
-}
-
-EpubToc::~EpubToc()
-{
 }

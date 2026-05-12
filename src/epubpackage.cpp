@@ -40,4 +40,5 @@ EpubPackage::~EpubPackage()
     delete m_metadata;
     delete m_manifest;
     delete m_spine;
+    delete m_toc;
 }

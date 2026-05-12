@@ -6,13 +6,6 @@
 
 #include "epubpackage.h"
 
-class EpubToc
-{
-public:
-    EpubToc();
-    ~EpubToc();
-};
-
 class Epub
 {
 public:
@@ -23,11 +16,10 @@ public:
     EpubMetadata *metadata() { return m_package->metadata(); }
     EpubManifest *manifest() { return m_package->manifest(); }
     EpubSpine *spine() { return m_package->spine(); }
-    EpubToc *toc();
+    EpubToc *toc() { return m_package->toc(); }
 
 private:
     EpubPackage *m_package;
-    EpubToc *m_toc;
 };
 
 #endif // EPUB_H
