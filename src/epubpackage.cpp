@@ -7,6 +7,9 @@
 EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
 {
     std::cout << "Loading package file: " << path << std::endl;
+
+    std::string package_url = path.substr(0, path.find_last_of('/'));
+
     zip.getEntry(path).readContent(std::cout);
 
     pugi::xml_document doc;
@@ -33,6 +36,10 @@ EpubPackage::EpubPackage(libzippp::ZipArchive &zip, const std::string &path)
 
     pugi::xml_node spineNode = doc.child("package").child("spine");
     m_spine = new EpubSpine(spineNode, m_manifest);
+
+    // Epub 2 uses toc attribute in spine, Epub 3 uses nav hint in manifest entry
+    std::string tocPath = m_manifest->entryById(m_spine->tocId())->href();
+    m_toc = new EpubToc(zip, package_url + "/" + tocPath);
 }
 
 EpubPackage::~EpubPackage()
