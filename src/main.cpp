@@ -37,8 +37,10 @@ int main(int argc, char *argv[])
     Ui::MainWindow ui;
     ui.setupUi(&widget);
 
+    Epub epub(std::filesystem::path("test/romeo_and_juliet_pg1513.epub"));
+
     QTextBrowser view;
-    view.setHtml("<html><head><style>@media (prefers-color-scheme: dark) { html { color: #ffffff; }}</style></head><body><h1>Hello, World! </h1><p>This is a simple web view.</p></body></html>");
+    view.setHtml(QString::fromStdString(epub.readById("item3")));
     view.setStyleSheet("background: transparent");
     view.setFrameStyle(QFrame::NoFrame);
 
@@ -46,8 +48,6 @@ int main(int argc, char *argv[])
 
     // Quit on button press
     ui.pushButton->connect(ui.pushButton, &QPushButton::clicked, &app, &QApplication::quit);
-
-    Epub epub(std::filesystem::path("test/romeo_and_juliet_pg1513.epub"));
 
     widget.show();
     return app.exec();

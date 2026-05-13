@@ -6,7 +6,7 @@
 class EpubToc
 {
 public:
-    EpubToc(libzippp::ZipArchive &zip, const std::string &path);
+    EpubToc(libzippp::ZipArchive *zip, const std::string &path);
     ~EpubToc();
 };
 

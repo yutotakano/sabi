@@ -8,19 +8,19 @@
 Epub::Epub(const std::filesystem::path &path)
 {
     std::cout << "Opening EPUB file: " << path.string() << std::endl;
-    libzippp::ZipArchive zip(path.string());
-    if (!zip.open(libzippp::ZipArchive::ReadOnly))
+    zip = new libzippp::ZipArchive(path.string());
+    if (!zip->open(libzippp::ZipArchive::ReadOnly))
     {
         throw std::runtime_error("Failed to open EPUB file: " + path.string());
     }
 
-    for (const auto &entry : zip.getEntries())
+    for (const auto &entry : zip->getEntries())
     {
         std::cout << "Entry: " << entry.getName() << std::endl;
     }
 
     // Sanity check mimetype
-    auto mimeEntry = zip.getEntry("mimetype");
+    auto mimeEntry = zip->getEntry("mimetype");
     if (mimeEntry.isNull() || mimeEntry.readAsText().compare("application/epub+zip") != 0)
     {
         throw std::runtime_error("No valid mimetype entry in EPUB file");
@@ -28,7 +28,7 @@ Epub::Epub(const std::filesystem::path &path)
 
     // Use only first package for now
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_string(zip.getEntry("META-INF/container.xml").readAsText().c_str());
+    pugi::xml_parse_result result = doc.load_string(zip->getEntry("META-INF/container.xml").readAsText().c_str());
     if (!result)
     {
         throw std::runtime_error("Failed to parse container.xml: " + std::string(result.description()));
@@ -48,4 +48,11 @@ Epub::Epub(const std::filesystem::path &path)
 Epub::~Epub()
 {
     delete m_package;
+    delete zip;
+}
+
+std::string Epub::readById(const std::string &id)
+{
+    // Default to first package
+    return m_package->readContent(zip, m_package->manifest()->entryById(id)->href());
 }

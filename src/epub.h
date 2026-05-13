@@ -18,8 +18,12 @@ public:
     EpubSpine *spine() { return m_package->spine(); }
     EpubToc *toc() { return m_package->toc(); }
 
+    std::string readById(const std::string &id);
+
 private:
     EpubPackage *m_package;
+
+    libzippp::ZipArchive *zip;
 };
 
 #endif // EPUB_H

@@ -11,7 +11,7 @@
 class EpubPackage
 {
 public:
-    EpubPackage(libzippp::ZipArchive &zip, const std::string &path);
+    EpubPackage(libzippp::ZipArchive *zip, const std::string &path);
     ~EpubPackage();
 
     EpubMetadata *metadata() { return m_metadata; }
@@ -19,11 +19,15 @@ public:
     EpubSpine *spine() { return m_spine; }
     EpubToc *toc() { return m_toc; }
 
+    std::string readContent(libzippp::ZipArchive *zip, const std::string &path);
+
 private:
     EpubMetadata *m_metadata;
     EpubManifest *m_manifest;
     EpubSpine *m_spine;
     EpubToc *m_toc;
+
+    std::string package_url;
 };
 
 #endif // EPUBPACKAGE_H
