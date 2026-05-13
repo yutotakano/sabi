@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets WebEngineWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 qt_standard_project_setup()
 
@@ -20,7 +20,7 @@ qt_add_executable(helloworld
 find_package(libzippp CONFIG REQUIRED)
 find_package(pugixml CONFIG REQUIRED)
 
-target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::WebEngineWidgets libzippp::libzippp pugixml::pugixml)
+target_link_libraries(helloworld PRIVATE Qt6::Widgets libzippp::libzippp pugixml::pugixml)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set_target_properties(helloworld PROPERTIES
