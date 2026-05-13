@@ -19,6 +19,7 @@ public:
     EpubToc *toc() { return m_package->toc(); }
 
     std::string readById(const std::string &id);
+    std::string readByHref(const std::string &href);
 
 private:
     EpubPackage *m_package;

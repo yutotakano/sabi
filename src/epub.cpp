@@ -56,3 +56,9 @@ std::string Epub::readById(const std::string &id)
     // Default to first package
     return m_package->readContent(zip, m_package->manifest()->entryById(id)->href());
 }
+
+std::string Epub::readByHref(const std::string &href)
+{
+    // Default to first package
+    return m_package->readContent(zip, href);
+}
