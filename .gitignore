@@ -4,3 +4,4 @@
 .vscode
 CMakeUserPresets.json
 /vcpkg_installed
+/.vs
