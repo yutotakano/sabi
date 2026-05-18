@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QTextBrowser>
 
 #include "ui_mainwindow.h"
@@ -31,13 +32,17 @@ int main(int argc, char *argv[])
     });
 
     QApplication app(argc, argv);
+    QCommandLineParser parser;
+    parser.addPositionalArgument("epub", "Path to the EPUB file to open");
+    parser.process(app);
 
     app.setStyle("windows11");
     QMainWindow widget;
     Ui::MainWindow ui;
     ui.setupUi(&widget);
 
-    Epub epub(std::filesystem::path("test/romeo_and_juliet_pg1513.epub"));
+    std::filesystem::path epubPath = (parser.positionalArguments().value(0, "test/romeo_and_juliet_pg1513.epub")).toStdString();
+    Epub epub(epubPath);
 
     class EpubTextBrowser : public QTextBrowser
     {
