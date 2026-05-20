@@ -46,8 +46,10 @@ EpubPackage::EpubPackage(libzippp::ZipArchive *zip, const std::string &path)
     pugi::xml_node spineNode = doc.child("package").child("spine");
     m_spine = new EpubSpine(spineNode, m_manifest);
 
+    std::string tocId = getTocId(manifestNode, spineNode);
+
     // Epub 2 uses toc attribute in spine, Epub 3 uses nav hint in manifest entry
-    std::string tocPath = m_manifest->entryById(m_spine->tocId())->href();
+    std::string tocPath = m_manifest->entryById(tocId)->href();
     m_toc = new EpubToc(zip, package_url + tocPath);
 }
 
@@ -74,4 +76,26 @@ std::string EpubPackage::readContent(libzippp::ZipArchive *zip, const std::strin
         throw std::runtime_error("Failed to read content: " + package_url + path);
     }
     return entry.readAsText();
+}
+
+std::string EpubPackage::getTocId(pugi::xml_node manifestNode, pugi::xml_node spineNode)
+{
+    // First try to get toc id from spine toc attribute (Epub 2)
+    std::string tocId = spineNode.attribute("toc").value();
+    if (!tocId.empty())
+    {
+        return tocId;
+    }
+
+    // If not found, try to find manifest entry with properties="nav" (Epub 3)
+    for (pugi::xml_node itemNode : manifestNode.children("item"))
+    {
+        std::string properties = itemNode.attribute("properties").value();
+        if (properties == "nav")
+        {
+            return itemNode.attribute("id").value();
+        }
+    }
+
+    throw std::runtime_error("Failed to find TOC");
 }

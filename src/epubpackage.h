@@ -28,6 +28,8 @@ private:
     EpubToc *m_toc;
 
     std::string package_url;
+
+    std::string getTocId(pugi::xml_node manifestNode, pugi::xml_node spineNode);
 };
 
 #endif // EPUBPACKAGE_H
