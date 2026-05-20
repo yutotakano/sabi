@@ -9,6 +9,15 @@ EpubPackage::EpubPackage(libzippp::ZipArchive *zip, const std::string &path)
     std::cout << "Loading package file: " << path << std::endl;
 
     package_url = path.substr(0, path.find_last_of('/'));
+    if (package_url == path)
+    {
+        // Handle the case when there was no '/' in path (probs root level package)
+        package_url = "";
+    }
+    else
+    {
+        package_url = package_url + "/";
+    }
 
     zip->getEntry(path).readContent(std::cout);
 
@@ -39,7 +48,7 @@ EpubPackage::EpubPackage(libzippp::ZipArchive *zip, const std::string &path)
 
     // Epub 2 uses toc attribute in spine, Epub 3 uses nav hint in manifest entry
     std::string tocPath = m_manifest->entryById(m_spine->tocId())->href();
-    m_toc = new EpubToc(zip, package_url + "/" + tocPath);
+    m_toc = new EpubToc(zip, package_url + tocPath);
 }
 
 EpubPackage::~EpubPackage()
@@ -59,10 +68,10 @@ EpubPackage::~EpubPackage()
  */
 std::string EpubPackage::readContent(libzippp::ZipArchive *zip, const std::string &path)
 {
-    auto entry = zip->getEntry(package_url + "/" + path);
+    auto entry = zip->getEntry(package_url + path);
     if (entry.isNull())
     {
-        throw std::runtime_error("Failed to read content: " + package_url + "/" + path);
+        throw std::runtime_error("Failed to read content: " + package_url + path);
     }
     return entry.readAsText();
 }
