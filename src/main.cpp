@@ -68,6 +68,23 @@ int main(int argc, char *argv[])
                 std::cerr << "Failed to read content for href: " << href << std::endl;
                 return QVariant();
             }
+
+            // Look up media-type in manifest
+            std::string mediaType = epub_->package()->manifest()->entryByHref(href)->mediaType();
+            std::cout << "Loading resource: " << href << " with media type: " << mediaType << std::endl;
+            if (mediaType == "image/jpeg" || mediaType == "image/png")
+            {
+                QByteArray imageData = QByteArray::fromStdString(content);
+                QPixmap pixmap;
+                if (!pixmap.loadFromData(imageData))
+                {
+                    std::cerr << "Failed to load image data for href: " << href << std::endl;
+                    return QVariant();
+                }
+                return pixmap;
+            }
+            std::cout << content << std::endl;
+
             return QString::fromStdString(content);
         }
 
